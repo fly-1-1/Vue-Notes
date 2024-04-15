@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue系列课程</title>
+</head>
+<body>
+<div id="app">
+    <h1>Axios的基本使用</h1>
+
+</div>
+</body>
+</html>
+<script src="js/axios.min.js"></script>
+<script>
+
+
+    /*axios.get("http://localhost:8080/demo?id=21&name=xiaochen").then(function(res){
+        console.log(res.data);
+    }).catch(function (err){
+        console.log(err);
+    })*/
+
+    /*axios.post("http://localhost:8080/test",{id:21,name:"zs"}).then(res => {
+            console.log(res.data);
+        }).catch(res => {
+            console.log(res);
+        })*/
+
+    /*   axios.put("http://localhost:8080/test1",{id:22,name:"zs"}).then(res => {
+           console.log(res.data);
+       }).catch(res => {
+           console.log(res);
+       })*/
+
+    //创建axios配置对象
+    let instance = axios.create({
+        baseURL: "http://localhost:8080/",
+        timeout: 10000
+    })
+
+    instance.get("demo?id=21&name=zs").then(res => {
+        console.log(res.data);
+    }).catch(res => {
+        console.log(res);
+    })
+
+    //请求拦截器
+    instance.interceptors.request.use(function (config) {
+        if (config.url.indexOf("?") === -1) {
+            config.url += "?token=1234"
+        } else {
+            config.url += "&token=1234";
+        }
+        return config;
+    });
+
+    //响应拦截器
+    instance.interceptors.response.use(function (response) {
+        if (response.status === 500) {
+            alert('服务器出现错误!');
+        }
+        return response;
+    });
+
+</script>
