@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+    <h1>{{count}}</h1>
+    <h1>{{user.id}}==={{user.name}}==={{user.age}}</h1>
+    <h1>{{schools[0]}}==={{schools[1]}}==={{schools[2]}}==={{schools.length}}</h1>
+    <h1>{{users[0].id}}==={{users[0].name}}==={{users[0].age}}</h1>
+</div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            msg: "Hello Vue",
+            count: 0,
+            user: {id: 21, name: "Tom", age: 25},
+            schools: ["Harvard", "Stanford", "MIT"],
+            users:[
+                {id: 1, name: "Alice", age: 23},
+                {id: 2, name: "Bob", age: 24},
+                {id: 3, name: "Charlie", age: 25}
+            ]
+        }
+    });
+</script>
+</html>

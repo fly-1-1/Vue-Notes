@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>vue系列课程之基础入门</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+
+        <!--
+            v-for指令:   作用: 用来在页面中实现vue中定义数据的遍历
+                        语法: 直接在对应标签上加入v-for指令
+                             a.遍历对象: v-for="value,key,index in data中变量名"
+                             b.遍历数组: v-for="item(普通类型元素),index in data中变量名"
+                             c.遍历数组对象:  v-for="item(对象),index in data中变量名"
+                            注意: 在使用v-for 建议尽可能在使用 v-for 时提供 key attribute  key属性唯一
+        -->
+        <span v-for="(v,k,i) in user">[{{v}}  {{k}}  {{i}} ]</span>
+        <ul>
+            <li v-for="(v,i) in schools">{{v}}--{{i+1}}</li>
+        </ul>
+
+        <table border="1" width="50%">
+            <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>薪资</th>
+            </tr>
+            <tr v-for="user in users" :key="user.id">
+                <td >{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.age}}</td>
+                <td>{{user.salary}}</td>
+            </tr>
+        </table>
+
+
+    </div>
+</body>
+</html>
+<!--引入vue.js核心文件-->
+<script src="js/vue.js"></script>
+<script>
+    var app = new Vue({
+        el:"#app",//代表vue实例作用范围
+        data:{    //用来vue实例绑定数据
+            msg:"hello vue",
+            user:{id:21,name:"zhangsan",age:23,salary:23000.23},//定义一个对象
+            schools: ["北京大学", "清华大学", "复旦大学", "上海交通大学"],//定义一个数组
+            users: [
+                {id:1,name:"lisi",age:22,salary:22000.22},
+                {id:2,name:"wangwu",age:21,salary:21000.21},
+                {id:3,name:"zhaoliu",age:20,salary:20000.20}]
+        },
+        methods: { //用来给vue实例定义一些列的相关方法
+
+        }
+    });
+</script>

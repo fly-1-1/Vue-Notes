@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+    <h1>{{count}}</h1>
+    <h1>{{count+1}}</h1>
+    <h1>{{content.toUpperCase()}}</h1>
+    <h1>{{content.length}}</h1>
+    <h1>{{content === "hello"}}</h1>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el: "#app", //元素缩写 代表vue实例作用范围
+        data: {
+            msg: "佐你好",
+            count: 0,
+            content: "hello"
+        }
+    });//创建Vue实例
+
+    //一个页面只可以有一个Vue实例
+    //el属性代表实例的作用范围 在作用范围内可以使用{{属性变量名}}} 直接获取data中的属性值
+    //4.使用{{}}进行data中数据获取时,可以在{{}}取值语法中进行算数运算 逻辑运算以及调用相关类型的相关方法
+    //5.vue实例中el属性可以书写任何css选择器 但是推荐使用id选择器 因为一个vue实例只能作用于一个具体作用范围
+</script>
+
+
+</html>

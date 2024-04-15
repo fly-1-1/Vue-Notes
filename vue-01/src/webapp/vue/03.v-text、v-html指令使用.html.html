@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+    <!--
+    v-text v-html
+    {{}} 取值 和  v-text 取值区别:
+                1.{{}}取值不会将标签原始数据清空  使用v-text取值清空标签原始数据    {{}}===>这种方式取值 插值表达式
+                2.{{}}取值存在插值闪烁   v-text v-html取值 不存在插值闪烁
+
+                推荐: 两种方式都可以使用  {{}} 更加灵活
+
+            v-text (innerText)、  v-html (innerHtml)区别：
+
+                1.使用v-text取值:直接将获取数据渲染到指定标签中
+                2.使用v-html取值:先将获取数据进行html标签解析,解析之后在渲染到指定标签中
+    -->
+    <h1 v-text="msg"></h1>
+    <h1 v-html="msg"></h1>
+
+    <span v-text="content"></span>
+    <span v-html="content"></span>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            msg: "Hello Vue",
+            content: "<a href='http://www.baidu.com'>点我查看详细</a>"
+        }
+    });
+</script>
+</html>
