@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>vue系列课程之基础入门</title>
+</head>
+<body>
+    <div id="app">
+
+        <!--
+            1.备忘录列表中数据交给vue管理
+            2.添加备忘录
+            3.删除备忘录
+            4.清空备忘录
+            5.备忘录总条数
+        -->
+        <label>
+            <input type="text" v-model="text">
+        </label>
+        <button @click="add">添加</button><br>
+        <ul>
+            <li v-for="(v,i) in list">{{v}} <a href="javascript:;" @click="del(i)">删除</a></li>
+
+        </ul>
+
+        <a v-show="list.length>0" href="javascript:;" @click="empty">清空</a>
+        <h3>当前备忘录总条数：{{total}}</h3>
+
+
+
+    </div>
+</body>
+</html>
+<!--引入vue.js核心文件-->
+<script src="js/vue.js"></script>
+<script>
+    var app = new Vue({
+      el:"#app",
+      data:{
+        text:"",
+        list:[],
+          total:0
+      },
+      methods:{
+          add(){
+              this.list.push(this.text);
+              this.total+=1;
+          },
+          del(i){
+             this.list.splice(i,1);
+          },
+          empty(){
+              this.list = [];
+              this.total = 0;
+          }
+
+      }
+    })
+</script>
