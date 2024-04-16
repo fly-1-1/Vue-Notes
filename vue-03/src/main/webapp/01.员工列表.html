@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>员工列表</title>
+    <script src="js/axios.min.js"></script>
+    <script src="js/vue.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+        .table-bordered {
+            border: 1px solid #d9edf7;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <div class="container">
+        <!--栅格系统-->
+        <div class="row">
+            <div class="col-md-12" style="text-align: center">
+                <h1>{{msg}}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" style="text-align: center">
+                <table width="100%" class="table table-striped table-bordered table-hover">
+                    <tr style="text-align: center">
+                        <th>编号</th>
+                        <th>姓名</th>
+                        <th>年龄</th>
+                        <th>工资</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr v-for="(v,i) in list" :key=i :class="i%2===0?'danger':'success'">
+                        <td>{{v.id}}</td>
+                        <td>{{v.name}}</td>
+                        <td>{{v.age}}</td>
+                        <td>{{v.salary}}</td>
+                        <td>
+                            <a href="" @click.prevent="deleteUser(v.id)" class="btn btn-danger btn-sm">删除</a>&nbsp;
+                            <a href="" @click.prevent="findUser(v.id)" class="btn btn-primary btn-sm">修改</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" >
+                <form action="">
+                    <div class="form-group">
+                    <div v-show="user.id">
+                        <label >编号:</label>
+                         <input class="form-control" type="text" v-model="user.id"> <br>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                            <label >姓名:</label>
+                            <input class="form-control" type="text" v-model="user.name"> <br>
+                    </div>
+                    <div class="form-group">
+                        <label >年龄:</label>
+                        <input class="form-control" type="text" v-model="user.age"> <br>
+                    </div>
+                    <div class="form-group">
+                        <label >工资:</label>
+                        <input class="form-control" type="text" v-model="user.salary"> <br>
+                    </div>
+                    <button type="button" @click="update()" class="btn btn-success">确认修改</button>
+                    <button @click="addUser()" class="btn btn-success">确认新增</button>
+                    <button @click="add()" class="btn btn-success">新增</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <br>
+
+
+
+
+</div>
+</body>
+<script>
+
+    let instance = axios.create({
+        baseURL: 'http://localhost:8080',
+        timeout: 5000
+    })
+
+    //响应拦截器
+    instance.interceptors.response.use(res => {
+        return res;
+    }, (err) => {
+        alert('后端服务出错啦,请稍后再试!!!');
+    });
+
+    let app = new Vue({
+        el: "#app",
+        data: {
+            msg: "员工列表",
+            list: [],
+            user: {}
+        },
+        methods: {
+            findAll() {
+                instance.get("/user").then(res => {
+                    this.list = res.data;
+                    console.log(res.data);
+                })
+            },
+            deleteUser(id) {
+                alert(id + "号员工已删除")
+                instance.delete("/user/" + id).then(res => {
+                    this.findAll();
+                })
+            },
+            addUser() {
+                instance.post("/user", this.user).then(res => {
+                    this.findAll();
+                })
+            },
+            add() {
+                this.user = {};
+            },
+            update() {
+                instance.put("/user/", this.user).then(res => {
+                    this.findAll();
+                })
+            },
+            findUser(id) {
+                instance.get("/user/" + id).then(res => {
+                    this.user = res.data;
+                })
+            }
+        },
+        computed: {},
+        created() {
+            this.findAll();
+        }
+    })
+</script>
+</html>
