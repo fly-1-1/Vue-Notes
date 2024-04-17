@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue系列课程</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <router-link :to="{name:'users'}">用户列表</router-link>
+        
+        <router-view></router-view>
+    </div>
+</body>
+<template id="users">
+    <div>
+        <h3>用户列表</h3>
+        <a href="#/users/useradd">添加用户</a>
+        <a href="#/users/useredit/1">编辑用户</a>
+        <table border="1">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>age</th>
+                <th>salary</th>
+                <th>operation</th>
+            </tr>
+            <tr v-for="(user,index) in users" :key="index">
+
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.age}}</td>
+                <td>{{user.salary}}</td>
+                <td><router-link :to="{name:'useredit',params:{id:user.id}}">编辑</router-link><a href="#">删除</a></td>
+            </tr>
+        </table>
+        <!--用于显示子组件-->
+        <router-view></router-view>
+    </div>
+</template>
+</html>
+
+<script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+
+    const users={
+        template:`#users`,
+        data(){
+            return{
+                users:[]
+            }
+        },
+        created(){
+            this.users=[{id:1,name:'张三',age:25,salary:5000},
+                {id:2,name:'李四',age:30,salary:6000},
+                {id:2,name:'李四',age:30,salary:6000},]
+        }
+    }
+
+    const useradd={
+        template:`<div>
+        <form>
+        <input type="text" placeholder="name">
+        <input type="text" placeholder="age">
+        <input type="text" placeholder="salary">
+        <button>提交</button>
+</form>
+</div>`
+    }
+
+    const useredit={
+        template:`<div>
+        <form>
+        <input type="text" placeholder="id" v-model="users.id">
+        <input type="text" placeholder="name">
+        <input type="text" placeholder="age">
+        <input type="text" placeholder="salary">
+        <button>提交</button>
+</form>
+</div>`,
+        created() {
+            this.users.id=this.$route.params.id;
+        },
+
+        data() {
+           return{
+               users:{}
+           }
+        }
+
+    }
+
+    let router = new VueRouter({
+        routes: [
+            {
+                path: '/users', component: users,name:'users',
+                children: [
+                    //嵌套子组件路由
+                    {path: 'useradd', component: useradd,name:'useradd'},
+                    {path: 'useredit/:id', component: useredit,name:'useredit'}
+                ]
+            }
+           ]
+    });
+
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            msg:"vue router 基本使用之嵌套路由"
+        },
+        methods:{},
+        router,
+    });
+</script>

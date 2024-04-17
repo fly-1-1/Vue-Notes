@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue系列课程</title>
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+
+  <!--<a href="#/login?name=zs&password=123">登录</a>
+  <a href="#/register/21/zs">注册</a>
+-->
+    <router-link to="/login?name=zs&password=123">登录</router-link>
+    <router-link :to="{path:'/login',query:{name:'xiaohong',password:123456}}">用户登录</router-link>
+    <router-link :to="{name:'Login',query:{name:'xiaohei',password:123456}}">用户登录</router-link>
+
+    <!--restful-->
+    <router-link :to="{path:'/register/22/xiaojindou'}">用户注册</router-link>
+    <router-link :to="{name:'Register',params:{id:233,name:'xiaojinniu'}}">用户注册</router-link>
+
+    <router-view></router-view>
+
+</div>
+</body>
+</html>
+<script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+
+    const login={
+        template:'<div><h4>登录页面</h4></div>',
+        created(){
+            alert(this.$route.query.name)
+            alert(this.$route.query.password)
+        }
+
+    }
+
+    const register={
+        template:'<div><h4>注册页面</h4></div>',
+        created(){
+            alert(this.$route.params.id)
+            alert(this.$route.params.name)
+        }
+    }
+
+    let router = new VueRouter({
+        routes: [
+            {path:'/login',component:login,name:'Login'},
+            {path:'/register/:id/:name',component:register,name:'Register'}
+        ]
+    });
+
+    //解决同一个路由多次切换报错的问题
+    const originalPush = VueRouter.prototype.push;
+    VueRouter.prototype.push = function push(location) {
+        return originalPush.call(this, location).catch(err => err)
+    };
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            msg:"vue router 基本使用之参数传递"
+        },
+        methods: {
+        },
+        router,
+
+    });
+</script>
