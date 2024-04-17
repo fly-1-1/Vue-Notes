@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue系列课程</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+
+
+        <!--切换路由链接-->
+      <!--  <a href="#/login">登录</a>
+        <a href="#/register">注册</a>-->
+
+        <!--切换路由标签  router-link  标签必须加入 to属性 to="路由路径" -->
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register">注册</router-link>
+
+
+        <router-link :to="{path:'/login'}">登录2</router-link>
+
+
+        <!--名称切换路由: 根据路由对象名称切换路由显示不同组件 根据路由名称切换路由只能使用router-link  推荐使用命名路由-->
+        <router-link :to="{name:'Login'}">登录3</router-link>
+        <router-link :to="{name:'Register'}">注册3</router-link>
+
+        <router-view></router-view>
+
+    </div>
+</body>
+</html>
+<script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+
+    const login={
+        template:'<div><h4>登录页面</h4></div>'
+    }
+
+    const register={
+        template:'<div><h4>注册页面</h4></div>'
+    }
+
+    let router = new VueRouter({
+        routes: [
+            {path:'/login',component:login,name:'Login'},
+            {path:'/register',component:register,name:'Register'}
+        ]
+    });
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            msg:"vue router 基本使用之使用router-link切换路由"
+        },
+        methods: {},
+        router,
+
+    });
+</script>

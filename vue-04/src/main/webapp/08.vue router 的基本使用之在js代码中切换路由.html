@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue系列课程</title>
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+
+    <router-link :to="{name:'Login'}">登录</router-link>
+    <router-link :to="{name:'Register'}">注册</router-link>
+
+    <!--在js代码中切换路由-->
+    <button @click="login">用户登陆</button>
+    <button @click="register">用户注册</button>
+
+    <router-view></router-view>
+
+</div>
+</body>
+</html>
+<script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+
+    const login={
+        template:'<div><h4>登录页面</h4></div>'
+    }
+
+    const register={
+        template:'<div><h4>注册页面</h4></div>'
+    }
+
+    let router = new VueRouter({
+        routes: [
+            {path:'/login',component:login,name:'Login'},
+            {path:'/register',component:register,name:'Register'}
+        ]
+    });
+
+    //解决同一个路由多次切换报错的问题
+    const originalPush = VueRouter.prototype.push;
+    VueRouter.prototype.push = function push(location) {
+        return originalPush.call(this, location).catch(err => err)
+    };
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            msg:"vue router 基本使用之在js代码中切换路由"
+        },
+        methods: {
+            login(){
+                //发送axios请求完成登录 响应回来之后切换路由到主页
+                //this.$route object 当前路由对象   this.$router vueRouter  代表路由管理器对象
+                //this.$router.push('/login');
+                /*if(this.$route.name!=='Login'){
+                    this.$router.push({name:'Login'});
+                }*/
+                this.$router.push({name:'Login'});
+            },
+            register(){
+               if(this.$route.name!=='Register'){
+                   this.$router.push({name:'Register'});
+               }
+            }
+        },
+        router,
+
+    });
+</script>
