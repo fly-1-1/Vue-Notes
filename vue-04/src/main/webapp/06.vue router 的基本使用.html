@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue系列课程</title>
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+
+    <a href="#/login">登录</a>
+    <a href="#/reg">注册</a>
+
+   <router-view></router-view>
+
+</div>
+</body>
+</html>
+<script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+
+    login={
+        template:`<div>登录页面</div>`
+    }
+
+    reg={
+        template:`<div>注册页面</div>`
+    }
+
+    //404组件
+    const notFound = { template: '<div>404 Not Found</div>' }
+
+    //创建路由规则对象
+    const router = new VueRouter({
+        routes: [
+            {path:'/',redirect:'/login'},
+            {path:'/login',component:login},
+            {path:'/reg',component:reg},
+            {path:'*',component:notFound} //必须放在最后
+        ]
+    });
+
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            msg:"vue router 基本使用"
+        },
+        methods:{},
+        //挂载路由对象
+        router,
+    });
+</script>
