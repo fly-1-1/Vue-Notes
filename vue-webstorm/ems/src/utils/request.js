@@ -3,7 +3,7 @@ import axios from 'axios'; //引入
 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8080', //请求的基础路径
+    baseURL: 'http://localhost:8081', //请求的基础路径
     timeout: 5000 //超时时间
 });
 
