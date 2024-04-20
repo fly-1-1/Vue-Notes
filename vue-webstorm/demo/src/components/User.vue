@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>{{msg}}</h3>
+    <h3>{{msg}} --{{this.$store.state.counter}}</h3>
     <button>添加</button>
     <table border="1" width="100%">
       <tr  class="aa">
