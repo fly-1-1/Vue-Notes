@@ -22,7 +22,7 @@
 
     <login><span slot="bb">默认插槽1</span></login>
     <hr>
-    <login><span slot="aa">默认插槽2</span></login>
+    <!--<login><span slot="aa">默认插槽2</span></login>-->
 
 </div>
 </body>
@@ -30,8 +30,12 @@
 <script src="js/vue.js"></script>
 <script>
 
-    const login={
-        template: `<div><slot name="aa"></slot><h3>登录</h3><slot name="bb"></slot></div>`
+    const login = {
+        template: `<div>
+                    <slot name="aa"></slot>
+                    <h3>登录</h3>
+                    <slot name="bb"></slot>
+                    </div>`
     }
 
 
@@ -40,10 +44,8 @@
         data: {
             msg: "组件的slot(插槽)",
         },
-        methods:{
-
-        },
-        components:{ //注册局部组件
+        methods: {},
+        components: { //注册局部组件
             login
         }
     });
